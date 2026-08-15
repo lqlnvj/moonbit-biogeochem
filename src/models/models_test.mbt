@@ -1,5 +1,6 @@
 // Integration tests for built-in ecosystem models
 
+///|
 test "npzd model simulation run" {
   let model = create_npzd_model(15.0, 0.5, 0.1, 0.2)
   let env_fn = fn(t) { @types.EnvironmentForcing::seasonal_forcing(t, 45.0) }
@@ -7,6 +8,7 @@ test "npzd model simulation run" {
   assert_true(traj.length() > 10)
 }
 
+///|
 test "oxygen depletion model run" {
   let model = create_oxygen_depletion_model(250.0, 50.0)
   let env_fn = fn(_t) { @types.EnvironmentForcing::default_surface() }
@@ -15,8 +17,11 @@ test "oxygen depletion model run" {
   assert_true(series.length() > 5)
 }
 
+///|
 test "coupled npzd carbon o2 model adaptive run" {
-  let model = create_coupled_carbon_npzd_model(12.0, 0.8, 0.2, 0.1, 240.0, 2100.0, 2300.0)
+  let model = create_coupled_carbon_npzd_model(
+    12.0, 0.8, 0.2, 0.1, 240.0, 2100.0, 2300.0,
+  )
   let env_fn = fn(t) { @types.EnvironmentForcing::seasonal_forcing(t, 30.0) }
   let cfg = @solver.AdaptiveSolverConfig::default()
   let traj = @solver.solve_rk45(model, 15.0, 0.5, cfg, env_fn).unwrap()

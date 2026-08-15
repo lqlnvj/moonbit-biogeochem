@@ -1,0 +1,150 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lqlnvj/moonbit-biogeochem/src/types"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn add_quantities(PhysicalQuantity, PhysicalQuantity) -> Result[PhysicalQuantity, String]
+
+pub fn check_unit_compatibility(UnitCategory, UnitCategory) -> Bool
+
+pub fn convert_celsius_to_kelvin(Double) -> Double
+
+pub fn convert_dbar_to_depth_m(Double, Double) -> Double
+
+pub fn convert_kelvin_to_celsius(Double) -> Double
+
+pub fn convert_mmol_c_m3_to_uatm_co2(Double, Double, Double) -> Double
+
+pub fn convert_mmol_n_m3_to_mg_chl_m3(Double, Double, Double) -> Double
+
+pub fn convert_per_day_to_per_hour(Double) -> Double
+
+pub fn convert_per_hour_to_per_day(Double) -> Double
+
+pub fn diurnal_wind_speed(Double, Double) -> Double
+
+pub fn sanitize_nan_values(Array[Double], Double) -> Array[Double]
+
+pub fn scale_quantity(PhysicalQuantity, Double) -> PhysicalQuantity
+
+pub fn sub_quantities(PhysicalQuantity, PhysicalQuantity) -> Result[PhysicalQuantity, String]
+
+pub fn unit_symbol(UnitCategory) -> String
+
+pub fn validate_state_vector_bounds(StateVector) -> Array[BoundsViolation]
+
+// Errors
+
+// Types and methods
+pub(all) struct BoundsViolation {
+  variable_id : String
+  attempted_value : Double
+  bound_limit : Double
+  violation_type : String
+} derive(@debug.Debug)
+pub fn BoundsViolation::new(String, Double, Double, String) -> Self
+
+pub(all) struct EnvironmentForcing {
+  time_day : Double
+  temperature : Double
+  salinity : Double
+  surface_par : Double
+  mld : Double
+  kz : Double
+} derive(Eq, @debug.Debug)
+pub fn EnvironmentForcing::default_surface() -> Self
+pub fn EnvironmentForcing::par_at_depth(Self, Double, Double, Double, Double) -> Double
+pub fn EnvironmentForcing::seasonal_forcing(Double, Double) -> Self
+
+pub(all) struct ModelParameter {
+  id : String
+  name : String
+  value : Double
+  unit : UnitCategory
+  min_bound : Double
+  max_bound : Double
+  description : String
+} derive(Eq, @debug.Debug)
+pub fn ModelParameter::new(String, String, Double, UnitCategory, Double, Double, String) -> Self
+
+pub(all) struct ParameterMap {
+  params : Map[String, ModelParameter]
+} derive(@debug.Debug)
+pub fn ParameterMap::empty() -> Self
+pub fn ParameterMap::from_array(Array[ModelParameter]) -> Self
+pub fn ParameterMap::get(Self, String) -> Result[Double, String]
+pub fn ParameterMap::keys(Self) -> Array[String]
+pub fn ParameterMap::set(Self, String, Double) -> Result[Self, String]
+
+pub(all) struct PhysicalQuantity {
+  value : Double
+  unit : UnitCategory
+  name : String
+} derive(@debug.Debug)
+pub fn PhysicalQuantity::convert_concentration_n_to_mass(Self) -> Result[Self, String]
+pub fn PhysicalQuantity::convert_rate_day_to_sec(Self) -> Result[Self, String]
+pub fn PhysicalQuantity::dimensionless(Double, String) -> Self
+pub fn PhysicalQuantity::new(Double, UnitCategory, String) -> Self
+
+pub(all) struct SpectralIrradiance {
+  red_par : Double
+  green_par : Double
+  blue_par : Double
+} derive(@debug.Debug)
+pub fn SpectralIrradiance::attenuate_at_depth(Self, Double, Double) -> Self
+pub fn SpectralIrradiance::from_total_par(Double) -> Self
+pub fn SpectralIrradiance::total(Self) -> Double
+
+pub(all) struct StateVariable {
+  id : String
+  name : String
+  unit : UnitCategory
+  value : Double
+  min_val : Double
+  max_val : Double
+} derive(Eq, @debug.Debug)
+pub fn StateVariable::clamp(Self) -> Self
+pub fn StateVariable::new(String, String, UnitCategory, Double, Double, Double) -> Self
+
+pub(all) struct StateVector {
+  vars : Array[StateVariable]
+  indices : Map[String, Int]
+} derive(@debug.Debug)
+pub fn StateVector::dimension(Self) -> Int
+pub fn StateVector::from_array(Self, Array[Double]) -> Result[Self, String]
+pub fn StateVector::get(Self, String) -> Result[Double, String]
+pub fn StateVector::names(Self) -> Array[String]
+pub fn StateVector::new(Array[StateVariable]) -> Self
+pub fn StateVector::set(Self, String, Double) -> Result[Self, String]
+pub fn StateVector::to_array(Self) -> Array[Double]
+
+pub(all) enum UnitCategory {
+  ConcentrationN
+  ConcentrationP
+  ConcentrationC
+  ConcentrationO
+  ConcentrationMass
+  RatePerDay
+  RatePerSecond
+  Flux
+  Velocity
+  Depth
+  Temperature
+  Salinity
+  Irradiance
+  Pressure
+  Dimensionless
+} derive(Compare, Eq, @debug.Debug)
+
+pub struct UnitConverter {
+  name : String
+} derive(@debug.Debug)
+pub fn UnitConverter::new() -> Self
+
+// Type aliases
+
+// Traits
+

@@ -1,5 +1,6 @@
 // Adaptive Step-Size Dormand-Prince / RKF45 Numerical Solver
 
+///|
 pub(all) struct AdaptiveSolverConfig {
   abs_tol : Double
   rel_tol : Double
@@ -8,6 +9,7 @@ pub(all) struct AdaptiveSolverConfig {
   safety_factor : Double
 } derive(Debug)
 
+///|
 pub fn AdaptiveSolverConfig::default() -> AdaptiveSolverConfig {
   {
     abs_tol: 1.0e-6,
@@ -18,12 +20,13 @@ pub fn AdaptiveSolverConfig::default() -> AdaptiveSolverConfig {
   }
 }
 
+///|
 pub fn solve_rk45(
   model : @core.BoxModel,
   t_end : Double,
   initial_dt : Double,
   config : AdaptiveSolverConfig,
-  env_provider : (Double) -> @types.EnvironmentForcing
+  env_provider : (Double) -> @types.EnvironmentForcing,
 ) -> Result[Trajectory, String] {
   let var_names = model.current_state.names()
   let traj = Trajectory::new(var_names)
@@ -48,11 +51,23 @@ pub fn solve_rk45(
 
     while !step_accepted {
       // 4th order RK approximation
-      let y4 = rk4_step(model.evaluator, curr_time, curr_y, trial_dt, env_provider, model.config.parameters)
+      let y4 = rk4_step(
+        model.evaluator,
+        curr_time,
+        curr_y,
+        trial_dt,
+        env_provider,
+        model.config.parameters,
+      )
 
       // Euler 1st order step to estimate local truncation error
       let env0 = env_provider(curr_time)
-      let derivs = model.evaluator.compute(curr_time, curr_y, env0, model.config.parameters)
+      let derivs = model.evaluator.compute(
+        curr_time,
+        curr_y,
+        env0,
+        model.config.parameters,
+      )
       let y1 = Array::make(dim, 0.0)
       for i = 0; i < dim; i = i + 1 {
         y1[i] = curr_y[i] + derivs[i] * trial_dt
@@ -77,7 +92,11 @@ pub fn solve_rk45(
         // Shrink step size
         let scale = config.safety_factor * @math.pow(1.0 / error_ratio, 0.25)
         let scaled_dt = trial_dt * scale
-        trial_dt = if scaled_dt < config.min_dt { config.min_dt } else { scaled_dt }
+        trial_dt = if scaled_dt < config.min_dt {
+          config.min_dt
+        } else {
+          scaled_dt
+        }
       }
     }
 

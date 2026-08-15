@@ -1,5 +1,6 @@
 // Finite Difference Local Sensitivity Analysis Engine
 
+///|
 pub(all) struct SensitivityCoefficient {
   param_id : String
   var_id : String
@@ -7,13 +8,14 @@ pub(all) struct SensitivityCoefficient {
   normalized_sensitivity : Double
 } derive(Debug)
 
+///|
 pub fn compute_local_sensitivity(
   model_factory : (@types.ParameterMap) -> @core.BoxModel,
   base_params : @types.ParameterMap,
   param_id : String,
   target_var : String,
   delta_fraction : Double,
-  t_eval : Double
+  t_eval : Double,
 ) -> Result[SensitivityCoefficient, String] {
   let base_p_val = match base_params.get(param_id) {
     Ok(v) => v

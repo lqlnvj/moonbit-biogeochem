@@ -1,5 +1,6 @@
 // Model System Diagnostics and Ecological Efficiency Analysis
 
+///|
 pub(all) struct ModelDiagnosticsReport {
   initial_total_mass : Double
   final_total_mass : Double
@@ -8,7 +9,10 @@ pub(all) struct ModelDiagnosticsReport {
   trophic_efficiency_z_p : Double
 } derive(Debug)
 
-pub fn diagnose_npzd_trajectory(traj : @solver.Trajectory) -> Result[ModelDiagnosticsReport, String] {
+///|
+pub fn diagnose_npzd_trajectory(
+  traj : @solver.Trajectory,
+) -> Result[ModelDiagnosticsReport, String] {
   let n_series = match traj.get_time_series("N") {
     Ok(s) => s
     Err(e) => return Err(e)
@@ -32,14 +36,13 @@ pub fn diagnose_npzd_trajectory(traj : @solver.Trajectory) -> Result[ModelDiagno
   }
 
   let init_tot = n_series[0] + p_series[0] + z_series[0] + d_series[0]
-  let final_tot = n_series[len - 1] + p_series[len - 1] + z_series[len - 1] + d_series[len - 1]
+  let final_tot = n_series[len - 1] +
+    p_series[len - 1] +
+    z_series[len - 1] +
+    d_series[len - 1]
   let loss = init_tot - final_tot
 
-  let status = if loss.abs() < 1.0e-2 {
-    "CONSERVED"
-  } else {
-    "MASS_FLUX_LEAK"
-  }
+  let status = if loss.abs() < 1.0e-2 { "CONSERVED" } else { "MASS_FLUX_LEAK" }
 
   let z_mean = z_series[len - 1]
   let p_mean = p_series[len - 1]

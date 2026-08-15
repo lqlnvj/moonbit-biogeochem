@@ -1,4 +1,5 @@
 import {
+  "lqlnvj/moonbit-biogeochem/src/types",
   "lqlnvj/moonbit-biogeochem/src/core",
   "lqlnvj/moonbit-biogeochem/src/solver",
 }

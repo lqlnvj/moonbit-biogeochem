@@ -1,0 +1,61 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lqlnvj/moonbit-biogeochem/src/solver"
+
+import {
+  "lqlnvj/moonbit-biogeochem/src/core",
+  "lqlnvj/moonbit-biogeochem/src/types",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn rk4_step(@core.DerivativeEvaluator, Double, Array[Double], Double, (Double) -> @types.EnvironmentForcing, @types.ParameterMap) -> Array[Double]
+
+pub fn solve_adams_bashforth_2(@core.BoxModel, Double, Double, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+pub fn solve_adams_bashforth_3(@core.BoxModel, Double, Double, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+pub fn solve_euler(@core.BoxModel, Double, Double, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+pub fn solve_implicit_euler(@core.BoxModel, Double, Double, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+pub fn solve_implicit_euler_step(@core.DerivativeEvaluator, Double, Array[Double], Double, @types.EnvironmentForcing, @types.ParameterMap, Int, Double) -> Array[Double]
+
+pub fn solve_rk4(@core.BoxModel, Double, Double, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+pub fn solve_rk45(@core.BoxModel, Double, Double, AdaptiveSolverConfig, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+pub fn solve_trapezoidal(@core.BoxModel, Double, Double, (Double) -> @types.EnvironmentForcing) -> Result[Trajectory, String]
+
+// Errors
+
+// Types and methods
+pub(all) struct AdaptiveSolverConfig {
+  abs_tol : Double
+  rel_tol : Double
+  min_dt : Double
+  max_dt : Double
+  safety_factor : Double
+} derive(@debug.Debug)
+pub fn AdaptiveSolverConfig::default() -> Self
+
+pub(all) struct Trajectory {
+  var_names : Array[String]
+  points : Array[TrajectoryPoint]
+} derive(@debug.Debug)
+pub fn Trajectory::append(Self, Double, Array[Double], Double) -> Unit
+pub fn Trajectory::get_time_series(Self, String) -> Result[Array[Double], String]
+pub fn Trajectory::get_timestamps(Self) -> Array[Double]
+pub fn Trajectory::length(Self) -> Int
+pub fn Trajectory::new(Array[String]) -> Self
+
+pub(all) struct TrajectoryPoint {
+  time : Double
+  values : Array[Double]
+  dt : Double
+} derive(@debug.Debug)
+pub fn TrajectoryPoint::new(Double, Array[Double], Double) -> Self
+
+// Type aliases
+
+// Traits
+

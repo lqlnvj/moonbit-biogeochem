@@ -1,0 +1,84 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lqlnvj/moonbit-biogeochem/src/analysis"
+
+import {
+  "lqlnvj/moonbit-biogeochem/src/core",
+  "lqlnvj/moonbit-biogeochem/src/solver",
+  "lqlnvj/moonbit-biogeochem/src/types",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn analyze_biological_carbon_pump(Double, Double, Double) -> CarbonPumpMetrics
+
+pub fn compute_local_sensitivity((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, String, String, Double, Double) -> Result[SensitivityCoefficient, String]
+
+pub fn compute_martin_curve_attenuation(Double, Double, Double, Double) -> Double
+
+pub fn compute_sobol_indices((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, String, String, Int, Double) -> Result[SobolIndices, String]
+
+pub fn diagnose_npzd_trajectory(@solver.Trajectory) -> Result[ModelDiagnosticsReport, String]
+
+pub fn run_1d_parameter_sweep((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, ParameterRange, Double, Double, String) -> Result[Array[SweepResultPoint], String]
+
+pub fn run_monte_carlo_simulation((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, String, Double, String, Int, Double) -> Result[MonteCarloSummary, String]
+
+// Errors
+
+// Types and methods
+pub(all) struct CarbonPumpMetrics {
+  surface_primary_production : Double
+  export_flux_100m : Double
+  deep_flux_1000m : Double
+  export_ratio_pe : Double
+  transfer_efficiency : Double
+} derive(@debug.Debug)
+
+pub(all) struct ModelDiagnosticsReport {
+  initial_total_mass : Double
+  final_total_mass : Double
+  mass_loss : Double
+  mass_conservation_status : String
+  trophic_efficiency_z_p : Double
+} derive(@debug.Debug)
+
+pub(all) struct MonteCarloSummary {
+  mean_val : Double
+  std_dev : Double
+  percentile_5 : Double
+  percentile_95 : Double
+} derive(@debug.Debug)
+
+pub(all) struct ParameterRange {
+  param_id : String
+  min_val : Double
+  max_val : Double
+  steps : Int
+} derive(@debug.Debug)
+pub fn ParameterRange::generate_grid(Self) -> Array[Double]
+pub fn ParameterRange::new(String, Double, Double, Int) -> Self
+
+pub(all) struct SensitivityCoefficient {
+  param_id : String
+  var_id : String
+  absolute_sensitivity : Double
+  normalized_sensitivity : Double
+} derive(@debug.Debug)
+
+pub(all) struct SobolIndices {
+  parameter_id : String
+  first_order_index : Double
+  total_order_index : Double
+} derive(@debug.Debug)
+pub fn SobolIndices::new(String, Double, Double) -> Self
+
+pub(all) struct SweepResultPoint {
+  param_values : Map[String, Double]
+  final_state : Array[Double]
+  max_phyto : Double
+} derive(@debug.Debug)
+
+// Type aliases
+
+// Traits
+

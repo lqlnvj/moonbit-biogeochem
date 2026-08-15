@@ -4,14 +4,21 @@ package "lqlnvj/moonbit-biogeochem/src/exporter"
 import {
   "lqlnvj/moonbit-biogeochem/src/core",
   "lqlnvj/moonbit-biogeochem/src/solver",
+  "lqlnvj/moonbit-biogeochem/src/types",
 }
 
 // Values
+pub fn export_junit_xml_report(String, Int, Int) -> String
+
 pub fn export_mermaid_diagram(String, Array[String]) -> String
 
 pub fn export_model_config_json(@core.BoxModel) -> String
 
 pub fn export_trajectory_csv(@solver.Trajectory) -> String
+
+pub fn generate_markdown_report(String, Double, @types.StateVector, String) -> String
+
+pub fn render_ascii_heatmap(Array[Array[Double]], String) -> String
 
 pub fn render_ascii_plot(Array[Double], String, Int, Int) -> String
 

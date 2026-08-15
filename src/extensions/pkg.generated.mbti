@@ -1,0 +1,77 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lqlnvj/moonbit-biogeochem/src/extensions"
+
+import {
+  "lqlnvj/moonbit-biogeochem/src/core",
+  "lqlnvj/moonbit-biogeochem/src/types",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn apply_nudge_assimilation(@types.StateVector, Double, Array[ObservationPoint], Double) -> Result[@types.StateVector, String]
+
+pub fn solve_advection_diffusion_step(Array[Double], Double, Double, Double, Double) -> Array[Double]
+
+// Errors
+
+// Types and methods
+pub(all) struct EnsembleFilterState {
+  ensemble_size : Int
+  states : Array[@types.StateVector]
+} derive(@debug.Debug)
+pub fn EnsembleFilterState::assimilate_observation(Self, String, Double, Double) -> Result[Self, String]
+pub fn EnsembleFilterState::create(@types.StateVector, Int) -> Self
+
+pub(all) struct ModelBuilder {
+  name : String
+  vars : Array[@types.StateVariable]
+  params : Array[@types.ModelParameter]
+  depth_m : Double
+  volume_m3 : Double
+} derive(@debug.Debug)
+pub fn ModelBuilder::add_parameter(Self, @types.ModelParameter) -> Self
+pub fn ModelBuilder::add_variable(Self, @types.StateVariable) -> Self
+pub fn ModelBuilder::build(Self, (Double, Array[Double], @types.EnvironmentForcing, @types.ParameterMap) -> Array[Double]) -> @core.BoxModel
+pub fn ModelBuilder::create(String) -> Self
+pub fn ModelBuilder::set_geometry(Self, Double, Double) -> Self
+
+pub(all) struct ObservationPoint {
+  time_day : Double
+  variable_id : String
+  observed_value : Double
+  error_variance : Double
+} derive(@debug.Debug)
+pub fn ObservationPoint::new(Double, String, Double, Double) -> Self
+
+pub(all) struct SedimentBox {
+  porosity : Double
+  sediment_depth_cm : Double
+  refractory_om : Double
+  labile_om : Double
+  dissolved_nh4 : Double
+} derive(@debug.Debug)
+pub fn SedimentBox::compute_benthic_fluxes(Self, Double) -> (Double, Double)
+pub fn SedimentBox::default() -> Self
+
+pub(all) struct VerticalLayer {
+  layer_index : Int
+  depth_m : Double
+  dz_m : Double
+  temperature : Double
+  par : Double
+  state : Array[Double]
+} derive(@debug.Debug)
+
+pub(all) struct WaterColumn1D {
+  num_layers : Int
+  total_depth_m : Double
+  layers : Array[VerticalLayer]
+  kz_m2_day : Double
+} derive(@debug.Debug)
+pub fn WaterColumn1D::compute_vertical_diffusion(Self, Int) -> Array[Double]
+pub fn WaterColumn1D::create(Int, Double, Array[Double]) -> Self
+
+// Type aliases
+
+// Traits
+

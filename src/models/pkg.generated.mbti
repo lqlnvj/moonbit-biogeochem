@@ -1,0 +1,40 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lqlnvj/moonbit-biogeochem/src/models"
+
+import {
+  "lqlnvj/moonbit-biogeochem/src/core",
+  "lqlnvj/moonbit-biogeochem/src/solver",
+  "lqlnvj/moonbit-biogeochem/src/types",
+}
+
+// Values
+pub fn create_coupled_carbon_npzd_model(Double, Double, Double, Double, Double, Double, Double) -> @core.BoxModel
+
+pub fn create_microbial_loop_model(Double, Double, Double, Double) -> @core.BoxModel
+
+pub fn create_npzd_iron_model(Double, Double, Double, Double, Double) -> @core.BoxModel
+
+pub fn create_npzd_model(Double, Double, Double, Double) -> @core.BoxModel
+
+pub fn create_npzd_model_with_params(@types.ParameterMap) -> @core.BoxModel
+
+pub fn create_npzd_silicon_model(Double, Double, Double, Double, Double, Double) -> @core.BoxModel
+
+pub fn create_npzdd_model(Double, Double, Double, Double, Double, Double) -> @core.BoxModel
+
+pub fn create_ocean_carbon_model(Double, Double) -> @core.BoxModel
+
+pub fn create_oxygen_depletion_model(Double, Double) -> @core.BoxModel
+
+pub fn estimate_pco2_microatm(Double, Double, Double) -> Double
+
+pub fn run_npzd_simulation(@core.BoxModel, Double, Double) -> Result[@solver.Trajectory, String]
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

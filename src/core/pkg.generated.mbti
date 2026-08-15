@@ -1,0 +1,119 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "lqlnvj/moonbit-biogeochem/src/core"
+
+import {
+  "lqlnvj/moonbit-biogeochem/src/types",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn air_sea_gas_flux(Double, Double, Double, Double) -> Double
+
+pub fn co2_molecular_diffusivity(Double) -> Double
+
+pub fn droop_cell_quota_limitation(Double, Double) -> Double
+
+pub fn geider_chl_c_ratio(Double, Double, Double, Double, Double) -> Double
+
+pub fn holling_type2(Double, Double, Double) -> Double
+
+pub fn holling_type3(Double, Double, Double) -> Double
+
+pub fn ivlev_grazing(Double, Double, Double) -> Double
+
+pub fn liebig_minimum_limitation(Array[Double]) -> Double
+
+pub fn michaelis_menten(Double, Double) -> Double
+
+pub fn o2_molecular_diffusivity(Double) -> Double
+
+pub fn o2_solubility_saturation(Double, Double) -> Double
+
+pub fn q10_temperature_factor(Double, Double, Double) -> Double
+
+pub fn quadratic_mortality(Double, Double) -> Double
+
+pub fn seawater_density_eos80(Double, Double) -> Double
+
+pub fn sinking_particle_flux(Double, Double, Double) -> Double
+
+pub fn steele_light_limitation(Double, Double) -> Double
+
+pub fn temperature_arrhenius_factor(Double, Double, Double) -> Double
+
+pub fn wanninkhof_piston_velocity(Double, Double, String) -> Double
+
+// Errors
+
+// Types and methods
+pub(all) struct BoxModel {
+  config : BoxModelConfig
+  current_state : @types.StateVector
+  current_time : Double
+  evaluator : DerivativeEvaluator
+} derive(@debug.Debug)
+pub fn BoxModel::get_derivatives(Self, Double, @types.EnvironmentForcing) -> Array[Double]
+pub fn BoxModel::new(BoxModelConfig, DerivativeEvaluator) -> Self
+pub fn BoxModel::update_state(Self, Double, Array[Double]) -> Result[Self, String]
+
+pub(all) struct BoxModelConfig {
+  name : String
+  version : String
+  box_volume_m3 : Double
+  box_depth_m : Double
+  initial_state : @types.StateVector
+  parameters : @types.ParameterMap
+} derive(@debug.Debug)
+pub fn BoxModelConfig::new(String, String, Double, Double, @types.StateVector, @types.ParameterMap) -> Self
+
+pub(all) struct DerivativeEvaluator {
+  eval_fn : (Double, Array[Double], @types.EnvironmentForcing, @types.ParameterMap) -> Array[Double]
+} derive(@debug.Debug)
+pub fn DerivativeEvaluator::compute(Self, Double, Array[Double], @types.EnvironmentForcing, @types.ParameterMap) -> Array[Double]
+pub fn DerivativeEvaluator::new((Double, Array[Double], @types.EnvironmentForcing, @types.ParameterMap) -> Array[Double]) -> Self
+
+pub(all) struct ElementVector {
+  c_val : Double
+  n_val : Double
+  p_val : Double
+  si_val : Double
+  o2_val : Double
+} derive(Eq, @debug.Debug)
+pub fn ElementVector::from_nitrogen(Double, RedfieldRatio, Double) -> Self
+pub fn ElementVector::new(Double, Double, Double, Double, Double) -> Self
+pub fn ElementVector::scale(Self, Double) -> Self
+
+pub(all) struct FluxDescriptor {
+  id : String
+  source_var : String
+  target_var : String
+  rate_value : Double
+  unit : @types.UnitCategory
+} derive(@debug.Debug)
+pub fn FluxDescriptor::new(String, String, String, Double, @types.UnitCategory) -> Self
+
+pub(all) struct MassConservationCheck {
+  total_element_initial : Double
+  total_element_current : Double
+  absolute_error : Double
+  relative_error : Double
+  is_conserved : Bool
+} derive(@debug.Debug)
+pub fn MassConservationCheck::audit(Double, Double, Double) -> Self
+
+pub(all) struct RedfieldRatio {
+  c_ratio : Double
+  n_ratio : Double
+  p_ratio : Double
+  o2_ratio : Double
+} derive(Eq, @debug.Debug)
+pub fn RedfieldRatio::c_to_n(Self) -> Double
+pub fn RedfieldRatio::n_to_c(Self) -> Double
+pub fn RedfieldRatio::o2_to_c(Self) -> Double
+pub fn RedfieldRatio::o2_to_n(Self) -> Double
+pub fn RedfieldRatio::standard() -> Self
+
+// Type aliases
+
+// Traits
+

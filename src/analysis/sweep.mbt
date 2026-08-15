@@ -1,5 +1,6 @@
 // Parameter Grid Sweep & Sampling Analysis Framework
 
+///|
 pub(all) struct ParameterRange {
   param_id : String
   min_val : Double
@@ -7,13 +8,20 @@ pub(all) struct ParameterRange {
   steps : Int
 } derive(Debug)
 
-pub fn ParameterRange::new(id : String, min_v : Double, max_v : Double, steps : Int) -> ParameterRange {
+///|
+pub fn ParameterRange::new(
+  id : String,
+  min_v : Double,
+  max_v : Double,
+  steps : Int,
+) -> ParameterRange {
   { param_id: id, min_val: min_v, max_val: max_v, steps }
 }
 
+///|
 pub fn ParameterRange::generate_grid(self : ParameterRange) -> Array[Double] {
   if self.steps <= 1 {
-    [ self.min_val ]
+    [self.min_val]
   } else {
     let arr = Array::make(self.steps, 0.0)
     let step_size = (self.max_val - self.min_val) / (self.steps - 1).to_double()
@@ -24,19 +32,21 @@ pub fn ParameterRange::generate_grid(self : ParameterRange) -> Array[Double] {
   }
 }
 
+///|
 pub(all) struct SweepResultPoint {
   param_values : Map[String, Double]
   final_state : Array[Double]
   max_phyto : Double
 } derive(Debug)
 
+///|
 pub fn run_1d_parameter_sweep(
   model_factory : (@types.ParameterMap) -> @core.BoxModel,
   base_params : @types.ParameterMap,
   param_range : ParameterRange,
   t_end : Double,
   dt : Double,
-  target_var : String
+  target_var : String,
 ) -> Result[Array[SweepResultPoint], String] {
   let values = param_range.generate_grid()
   let results = Array::new()

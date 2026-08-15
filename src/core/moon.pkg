@@ -1,6 +1,6 @@
 import {
-  "lqlnvj/moonbit-biogeochem/src/types" @types,
-  "moonbitlang/core/math" @math,
+  "lqlnvj/moonbit-biogeochem/src/types",
+  "moonbitlang/core/math",
 }
 
 options(
