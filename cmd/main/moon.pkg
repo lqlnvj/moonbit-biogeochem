@@ -1,0 +1,7 @@
+// import {
+//   "lqlnvj/moonbit-biogeochem" @lib,
+// }
+
+options(
+  "is-main": true,
+)
