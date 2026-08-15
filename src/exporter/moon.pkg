@@ -1,0 +1,8 @@
+import {
+  "lqlnvj/moonbit-biogeochem/src/core",
+  "lqlnvj/moonbit-biogeochem/src/solver",
+}
+
+options(
+  "is-main": false,
+)

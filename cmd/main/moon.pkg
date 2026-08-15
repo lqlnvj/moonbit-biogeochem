@@ -1,7 +1,10 @@
-// import {
-//   "lqlnvj/moonbit-biogeochem" @lib,
-// }
+import {
+  "lqlnvj/moonbit-biogeochem/src/types",
+  "lqlnvj/moonbit-biogeochem/src/solver",
+  "lqlnvj/moonbit-biogeochem/src/models",
+  "lqlnvj/moonbit-biogeochem/src/analysis",
+  "lqlnvj/moonbit-biogeochem/src/extensions",
+  "lqlnvj/moonbit-biogeochem/src/exporter",
+}
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
