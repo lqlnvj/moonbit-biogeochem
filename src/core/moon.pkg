@@ -1,0 +1,8 @@
+import {
+  "lqlnvj/moonbit-biogeochem/src/types" @types,
+  "moonbitlang/core/math" @math,
+}
+
+options(
+  "is-main": false,
+)
