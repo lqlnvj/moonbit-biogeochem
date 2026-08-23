@@ -1,0 +1,8 @@
+import {
+  "lqlnvj/moonbit-biogeochem/src/analysis",
+  "lqlnvj/moonbit-biogeochem/src/models",
+  "lqlnvj/moonbit-biogeochem/src/solver",
+  "lqlnvj/moonbit-biogeochem/src/types",
+}
+
+pkgtype(kind: "executable")
