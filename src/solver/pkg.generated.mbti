@@ -43,10 +43,14 @@ pub(all) struct Trajectory {
   points : Array[TrajectoryPoint]
 } derive(@debug.Debug)
 pub fn Trajectory::append(Self, Double, Array[Double], Double) -> Unit
+pub fn Trajectory::duration(Self) -> Result[Double, String]
 pub fn Trajectory::get_time_series(Self, String) -> Result[Array[Double], String]
 pub fn Trajectory::get_timestamps(Self) -> Array[Double]
 pub fn Trajectory::length(Self) -> Int
 pub fn Trajectory::new(Array[String]) -> Self
+pub fn Trajectory::time_step_bounds(Self) -> Result[(Double, Double), String]
+pub fn Trajectory::try_append(Self, Double, Array[Double], Double) -> Result[Unit, String]
+pub fn Trajectory::validate(Self) -> Result[TrajectoryValidation, String]
 
 pub(all) struct TrajectoryPoint {
   time : Double
@@ -55,7 +59,14 @@ pub(all) struct TrajectoryPoint {
 } derive(@debug.Debug)
 pub fn TrajectoryPoint::new(Double, Array[Double], Double) -> Self
 
+pub(all) struct TrajectoryValidation {
+  point_count : Int
+  variable_count : Int
+  duration : Double
+  min_dt : Double
+  max_dt : Double
+} derive(@debug.Debug)
+
 // Type aliases
 
 // Traits
-

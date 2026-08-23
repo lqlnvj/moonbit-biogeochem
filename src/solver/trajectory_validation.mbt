@@ -104,7 +104,8 @@ fn validate_trajectory_contents(
         max_dt = time_step
       }
     }
-    duration = trajectory.points[trajectory.points.length() - 1].time - first_time
+    duration = trajectory.points[trajectory.points.length() - 1].time -
+      first_time
   }
 
   Ok({

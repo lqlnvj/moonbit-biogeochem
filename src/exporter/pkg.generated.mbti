@@ -29,4 +29,3 @@ pub fn render_ascii_plot(Array[Double], String, Int, Int) -> String
 // Type aliases
 
 // Traits
-

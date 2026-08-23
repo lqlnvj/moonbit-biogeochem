@@ -10,7 +10,13 @@ import {
 // Values
 pub fn apply_nudge_assimilation(@types.StateVector, Double, Array[ObservationPoint], Double) -> Result[@types.StateVector, String]
 
+pub fn assess_water_column_step(WaterColumn1D, Double, Double, Double) -> Result[WaterColumnDiagnostics, String]
+
 pub fn solve_advection_diffusion_step(Array[Double], Double, Double, Double, Double) -> Array[Double]
+
+pub fn validate_water_column(WaterColumn1D) -> Result[WaterColumnDiagnostics, String]
+
+pub fn water_column_stability_limit(Double, Double, Double) -> Result[Double, String]
 
 // Errors
 
@@ -70,8 +76,20 @@ pub(all) struct WaterColumn1D {
 } derive(@debug.Debug)
 pub fn WaterColumn1D::compute_vertical_diffusion(Self, Int) -> Array[Double]
 pub fn WaterColumn1D::create(Int, Double, Array[Double]) -> Self
+pub fn WaterColumn1D::try_create(Int, Double, Array[Double]) -> Result[Self, String]
+
+pub(all) struct WaterColumnDiagnostics {
+  layer_count : Int
+  state_dimension : Int
+  total_inventory : Double
+  minimum_concentration : Double
+  maximum_concentration : Double
+  non_negative : Bool
+  maximum_cfl : Double
+  stable : Bool
+  stable_dt_upper_bound : Double
+} derive(@debug.Debug)
 
 // Type aliases
 
 // Traits
-

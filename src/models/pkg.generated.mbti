@@ -37,4 +37,3 @@ pub fn run_npzd_simulation(@core.BoxModel, Double, Double) -> Result[@solver.Tra
 // Type aliases
 
 // Traits
-

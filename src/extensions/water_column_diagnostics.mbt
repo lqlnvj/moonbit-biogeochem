@@ -71,14 +71,16 @@ pub fn validate_water_column(
     if layer.state.length() != state_dimension {
       return Err("Water column layers must have equal state dimensions")
     }
-    if !finite_column_value(layer.depth_m) || !finite_column_value(layer.dz_m) ||
+    if !finite_column_value(layer.depth_m) ||
+      !finite_column_value(layer.dz_m) ||
       layer.dz_m <= 0.0 {
       return Err("Water column layer geometry must be finite and positive")
     }
     if (layer.dz_m - reference_dz).abs() > 1.0e-9 {
       return Err("Water column layers must use equal spacing")
     }
-    if !finite_column_value(layer.temperature) || !finite_column_value(layer.par) {
+    if !finite_column_value(layer.temperature) ||
+      !finite_column_value(layer.par) {
       return Err("Water column environmental fields must be finite")
     }
     for value in layer.state {
@@ -150,7 +152,8 @@ pub fn assess_water_column_step(
     return Err("Water column dt must be finite and positive")
   }
   let dz = column.layers[0].dz_m
-  let limit = match water_column_stability_limit(dz, kz_m2_day, w_sinking_m_day) {
+  let limit = match
+    water_column_stability_limit(dz, kz_m2_day, w_sinking_m_day) {
     Ok(value) => value
     Err(err) => return Err(err)
   }

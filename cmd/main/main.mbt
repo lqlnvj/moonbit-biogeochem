@@ -9,9 +9,6 @@ fn main {
     "  MoonBit Marine Biogeochemical Box Model Engine (`moonbit-biogeochem`) v0.1.0  ",
   )
   println(
-    "  OSC 2026 Hackathon Open Source Competition Entry                            ",
-  )
-  println(
     "================================================================================\n",
   )
 
@@ -117,5 +114,7 @@ fn main {
   let diagram = @exporter.export_mermaid_diagram("NPZD", ["N", "P", "Z", "D"])
   println(diagram)
 
-  println("✨ All biogeochemical engine demonstration tasks executed cleanly!")
+  println(
+    "All biogeochemical engine demonstration tasks completed successfully.",
+  )
 }

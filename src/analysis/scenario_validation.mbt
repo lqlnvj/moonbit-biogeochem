@@ -34,7 +34,9 @@ fn finite_scenario_value(value : Double) -> Bool {
 }
 
 ///|
-fn report_from_issues(issues : Array[ValidationIssue]) -> ScenarioValidationReport {
+fn report_from_issues(
+  issues : Array[ValidationIssue],
+) -> ScenarioValidationReport {
   let mut valid = true
   for issue in issues {
     if issue.severity is Error {
@@ -45,7 +47,10 @@ fn report_from_issues(issues : Array[ValidationIssue]) -> ScenarioValidationRepo
 }
 
 ///|
-fn append_issues(target : Array[ValidationIssue], source : Array[ValidationIssue]) -> Unit {
+fn append_issues(
+  target : Array[ValidationIssue],
+  source : Array[ValidationIssue],
+) -> Unit {
   for issue in source {
     target.push(issue)
   }
@@ -76,7 +81,11 @@ fn validate_state_value(
   issues : Array[ValidationIssue],
 ) -> Unit {
   if variable.id == "" {
-    add_error(issues, "state.empty_id", "State variable " + index.to_string() + " has an empty id")
+    add_error(
+      issues,
+      "state.empty_id",
+      "State variable " + index.to_string() + " has an empty id",
+    )
   }
   if variable.min_val > variable.max_val {
     add_error(
@@ -86,7 +95,11 @@ fn validate_state_value(
     )
   }
   if !finite_scenario_value(variable.value) {
-    add_error(issues, "state.non_finite", "State variable " + variable.id + " is not finite")
+    add_error(
+      issues,
+      "state.non_finite",
+      "State variable " + variable.id + " is not finite",
+    )
   }
   if variable.value < variable.min_val || variable.value > variable.max_val {
     add_error(
@@ -100,7 +113,7 @@ fn validate_state_value(
     | @types.ConcentrationP
     | @types.ConcentrationC
     | @types.ConcentrationO
-    | @types.ConcentrationMass => {
+    | @types.ConcentrationMass =>
       if variable.value < 0.0 {
         add_error(
           issues,
@@ -108,7 +121,6 @@ fn validate_state_value(
           "Concentration " + variable.id + " must be non-negative",
         )
       }
-    }
     _ => ()
   }
 }
@@ -119,11 +131,7 @@ pub fn validate_state_vector(
 ) -> ScenarioValidationReport {
   let issues = Array::new()
   if state.vars.length() == 0 {
-    add_warning(
-      issues,
-      "state.empty",
-      "State vector has no variables",
-    )
+    add_warning(issues, "state.empty", "State vector has no variables")
   }
   for i = 0; i < state.vars.length(); i = i + 1 {
     validate_state_value(state.vars[i], i, issues)
@@ -156,7 +164,8 @@ pub fn validate_parameter_map(
         "Parameter " + id + " contains a non-finite value",
       )
     }
-    if parameter.value < parameter.min_bound || parameter.value > parameter.max_bound {
+    if parameter.value < parameter.min_bound ||
+      parameter.value > parameter.max_bound {
       add_error(
         issues,
         "parameter.out_of_bounds",
@@ -180,37 +189,40 @@ pub fn validate_model_scenario(
   append_issues(issues, parameter_report.issues)
 
   if !finite_scenario_value(t_end) || t_end <= 0.0 {
-    add_error(issues, "solver.invalid_end_time", "t_end must be finite and positive")
+    add_error(
+      issues, "solver.invalid_end_time", "t_end must be finite and positive",
+    )
   }
   if !finite_scenario_value(dt) || dt <= 0.0 {
     add_error(issues, "solver.invalid_step", "dt must be finite and positive")
   }
   if !finite_scenario_value(model.config.box_volume_m3) ||
     model.config.box_volume_m3 <= 0.0 {
-    add_error(issues, "geometry.invalid_volume", "Model volume must be finite and positive")
+    add_error(
+      issues, "geometry.invalid_volume", "Model volume must be finite and positive",
+    )
   }
   if !finite_scenario_value(model.config.box_depth_m) ||
     model.config.box_depth_m <= 0.0 {
-    add_error(issues, "geometry.invalid_depth", "Model depth must be finite and positive")
+    add_error(
+      issues, "geometry.invalid_depth", "Model depth must be finite and positive",
+    )
   }
 
   if state_report.valid {
     let derivatives = model.get_derivatives(
-      0.0, @types.EnvironmentForcing::default_surface(),
+      0.0,
+      @types.EnvironmentForcing::default_surface(),
     )
     if derivatives.length() != model.config.initial_state.dimension() {
       add_error(
-        issues,
-        "solver.dimension_mismatch",
-        "Derivative output dimension does not match the state vector",
+        issues, "solver.dimension_mismatch", "Derivative output dimension does not match the state vector",
       )
     }
   }
   if dt > t_end && t_end > 0.0 {
     add_warning(
-      issues,
-      "solver.coarse_step",
-      "dt is larger than the requested simulation duration",
+      issues, "solver.coarse_step", "dt is larger than the requested simulation duration",
     )
   }
   report_from_issues(issues)

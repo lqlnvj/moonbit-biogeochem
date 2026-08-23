@@ -8,7 +8,8 @@ fn print_npzd_benchmark() -> Unit {
     Ok(trajectory) => {
       let series = trajectory.get_time_series("P").unwrap()
       let summary = @analysis.summarize_series(
-        trajectory.get_timestamps(), series,
+        trajectory.get_timestamps(),
+        series,
       ).unwrap()
       let final_value = series[series.length() - 1]
       println(
@@ -35,7 +36,8 @@ fn print_coupled_benchmark() -> Unit {
     Ok(trajectory) => {
       let series = trajectory.get_time_series("DIC").unwrap()
       let summary = @analysis.summarize_series(
-        trajectory.get_timestamps(), series,
+        trajectory.get_timestamps(),
+        series,
       ).unwrap()
       let final_value = series[series.length() - 1]
       println(

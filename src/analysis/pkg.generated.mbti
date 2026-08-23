@@ -11,6 +11,8 @@ import {
 // Values
 pub fn analyze_biological_carbon_pump(Double, Double, Double) -> CarbonPumpMetrics
 
+pub fn compute_duration_below_threshold(Array[Double], Array[Double], Double) -> Result[Double, String]
+
 pub fn compute_local_sensitivity((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, String, String, Double, Double) -> Result[SensitivityCoefficient, String]
 
 pub fn compute_martin_curve_attenuation(Double, Double, Double, Double) -> Double
@@ -19,9 +21,21 @@ pub fn compute_sobol_indices((@types.ParameterMap) -> @core.BoxModel, @types.Par
 
 pub fn diagnose_npzd_trajectory(@solver.Trajectory) -> Result[ModelDiagnosticsReport, String]
 
+pub fn find_threshold_crossings(Array[Double], Array[Double], Double) -> Result[Array[ThresholdCrossing], String]
+
 pub fn run_1d_parameter_sweep((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, ParameterRange, Double, Double, String) -> Result[Array[SweepResultPoint], String]
 
 pub fn run_monte_carlo_simulation((@types.ParameterMap) -> @core.BoxModel, @types.ParameterMap, String, Double, String, Int, Double) -> Result[MonteCarloSummary, String]
+
+pub fn summarize_series(Array[Double], Array[Double]) -> Result[SeriesStatistics, String]
+
+pub fn summarize_trajectory(@solver.Trajectory) -> Result[TrajectorySummary, String]
+
+pub fn validate_model_scenario(@core.BoxModel, Double, Double) -> ScenarioValidationReport
+
+pub fn validate_parameter_map(@types.ParameterMap) -> ScenarioValidationReport
+
+pub fn validate_state_vector(@types.StateVector) -> ScenarioValidationReport
 
 // Errors
 
@@ -58,11 +72,26 @@ pub(all) struct ParameterRange {
 pub fn ParameterRange::generate_grid(Self) -> Array[Double]
 pub fn ParameterRange::new(String, Double, Double, Int) -> Self
 
+pub(all) struct ScenarioValidationReport {
+  valid : Bool
+  issues : Array[ValidationIssue]
+} derive(@debug.Debug)
+
 pub(all) struct SensitivityCoefficient {
   param_id : String
   var_id : String
   absolute_sensitivity : Double
   normalized_sensitivity : Double
+} derive(@debug.Debug)
+
+pub(all) struct SeriesStatistics {
+  count : Int
+  minimum : Double
+  maximum : Double
+  mean : Double
+  integral : Double
+  trend : Double
+  finite : Bool
 } derive(@debug.Debug)
 
 pub(all) struct SobolIndices {
@@ -78,7 +107,36 @@ pub(all) struct SweepResultPoint {
   max_phyto : Double
 } derive(@debug.Debug)
 
+pub(all) struct ThresholdCrossing {
+  time : Double
+  value : Double
+  direction : ThresholdDirection
+} derive(@debug.Debug)
+
+pub(all) enum ThresholdDirection {
+  Rising
+  Falling
+} derive(Eq, @debug.Debug)
+
+pub(all) struct TrajectorySummary {
+  duration : Double
+  minimum_step : Double
+  maximum_step : Double
+  variable_names : Array[String]
+} derive(@debug.Debug)
+
+pub(all) struct ValidationIssue {
+  code : String
+  severity : ValidationSeverity
+  message : String
+} derive(@debug.Debug)
+pub fn ValidationIssue::new(String, ValidationSeverity, String) -> Self
+
+pub(all) enum ValidationSeverity {
+  Error
+  Warning
+} derive(Eq, @debug.Debug)
+
 // Type aliases
 
 // Traits
-

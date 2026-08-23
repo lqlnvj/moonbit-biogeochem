@@ -106,15 +106,7 @@ pub fn summarize_series(
   } else {
     (n * sum_ty - sum_t * sum_y) / denominator
   }
-  Ok({
-    count,
-    minimum,
-    maximum,
-    mean: sum_y / n,
-    integral,
-    trend,
-    finite: true,
-  })
+  Ok({ count, minimum, maximum, mean: sum_y / n, integral, trend, finite: true })
 }
 
 ///|
@@ -150,7 +142,8 @@ pub fn find_threshold_crossings(
   for i = 0; i < values.length() - 1; i = i + 1 {
     let value_a = values[i]
     let value_b = values[i + 1]
-    let direction : ThresholdDirection? = if value_a < threshold && value_b >= threshold {
+    let direction : ThresholdDirection? = if value_a < threshold &&
+      value_b >= threshold {
       Some(Rising)
     } else if value_a > threshold && value_b <= threshold {
       Some(Falling)
@@ -162,13 +155,18 @@ pub fn find_threshold_crossings(
       None
     }
     match direction {
-      Some(kind) => crossings.push({
-        time: crossing_time(
-          times[i], times[i + 1], value_a, value_b, threshold,
-        ),
-        value: threshold,
-        direction: kind,
-      })
+      Some(kind) =>
+        crossings.push({
+          time: crossing_time(
+            times[i],
+            times[i + 1],
+            value_a,
+            value_b,
+            threshold,
+          ),
+          value: threshold,
+          direction: kind,
+        })
       None => ()
     }
   }
@@ -212,11 +210,12 @@ pub fn summarize_trajectory(
 ) -> Result[TrajectorySummary, String] {
   match trajectory.validate() {
     Err(err) => Err(err)
-    Ok(report) => Ok({
-      duration: report.duration,
-      minimum_step: report.min_dt,
-      maximum_step: report.max_dt,
-      variable_names: trajectory.var_names.copy(),
-    })
+    Ok(report) =>
+      Ok({
+        duration: report.duration,
+        minimum_step: report.min_dt,
+        maximum_step: report.max_dt,
+        variable_names: trajectory.var_names.copy(),
+      })
   }
 }

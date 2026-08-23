@@ -31,14 +31,14 @@ The fixed model metrics and step counts were identical across all five runs.
 
 | Run | Native release elapsed time (ms) |
 | ---: | ---: |
-| 1 | 136.170 |
-| 2 | 114.308 |
-| 3 | 110.102 |
-| 4 | 130.013 |
-| 5 | 118.395 |
-| Minimum | 110.102 |
-| Median | 118.395 |
-| Maximum | 136.170 |
+| 1 | 115.684 |
+| 2 | 108.068 |
+| 3 | 108.872 |
+| 4 | 105.711 |
+| 5 | 108.222 |
+| Minimum | 105.711 |
+| Median | 108.222 |
+| Maximum | 115.684 |
 
 These timings are machine-local observations, not performance guarantees or
 cross-machine targets.

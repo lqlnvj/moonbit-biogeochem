@@ -1,26 +1,26 @@
 runs=5
-minimum_ms=110.102
-median_ms=118.395
-maximum_ms=136.17
+minimum_ms=105.711
+median_ms=108.222
+maximum_ms=115.684
 
 raw_runs:
-run=1 elapsed_ms=136.17
+run=1 elapsed_ms=115.684
 workload,solver,steps,final_metric,integral_metric
 npzd,rk4,121,0.2567276354415966,44.54968446138396
 coupled_carbon,rk45,4401,2110.5432848801415,41527.46184909604
-run=2 elapsed_ms=114.308
+run=2 elapsed_ms=108.068
 workload,solver,steps,final_metric,integral_metric
 npzd,rk4,121,0.2567276354415966,44.54968446138396
 coupled_carbon,rk45,4401,2110.5432848801415,41527.46184909604
-run=3 elapsed_ms=110.102
+run=3 elapsed_ms=108.872
 workload,solver,steps,final_metric,integral_metric
 npzd,rk4,121,0.2567276354415966,44.54968446138396
 coupled_carbon,rk45,4401,2110.5432848801415,41527.46184909604
-run=4 elapsed_ms=130.013
+run=4 elapsed_ms=105.711
 workload,solver,steps,final_metric,integral_metric
 npzd,rk4,121,0.2567276354415966,44.54968446138396
 coupled_carbon,rk45,4401,2110.5432848801415,41527.46184909604
-run=5 elapsed_ms=118.395
+run=5 elapsed_ms=108.222
 workload,solver,steps,final_metric,integral_metric
 npzd,rk4,121,0.2567276354415966,44.54968446138396
 coupled_carbon,rk45,4401,2110.5432848801415,41527.46184909604

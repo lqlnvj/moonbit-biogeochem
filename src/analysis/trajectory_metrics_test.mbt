@@ -15,9 +15,7 @@ test "series statistics use trapezoidal integration" {
 
 ///|
 test "threshold crossings interpolate time and direction" {
-  let result = find_threshold_crossings(
-    [0.0, 2.0, 4.0], [0.0, 4.0, 0.0], 2.0,
-  )
+  let result = find_threshold_crossings([0.0, 2.0, 4.0], [0.0, 4.0, 0.0], 2.0)
   match result {
     Ok(crossings) => {
       assert_eq(crossings.length(), 2)
@@ -33,7 +31,9 @@ test "threshold crossings interpolate time and direction" {
 ///|
 test "duration below threshold integrates partial segments" {
   let result = compute_duration_below_threshold(
-    [0.0, 2.0, 4.0], [0.0, 4.0, 0.0], 2.0,
+    [0.0, 2.0, 4.0],
+    [0.0, 4.0, 0.0],
+    2.0,
   )
   match result {
     Ok(duration) => assert_eq(duration, 2.0)
