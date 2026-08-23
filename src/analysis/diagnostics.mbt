@@ -42,7 +42,13 @@ pub fn diagnose_npzd_trajectory(
     d_series[len - 1]
   let loss = init_tot - final_tot
 
-  let status = if loss.abs() < 1.0e-2 { "CONSERVED" } else { "MASS_FLUX_LEAK" }
+  // Detritus sinking exports material from the modeled box. Report that
+  // expected open-system flux explicitly instead of calling it a numerical leak.
+  let status = if loss.abs() < 1.0e-2 {
+    "CONSERVED"
+  } else {
+    "OPEN_SYSTEM_EXPORT"
+  }
 
   let z_mean = z_series[len - 1]
   let p_mean = p_series[len - 1]

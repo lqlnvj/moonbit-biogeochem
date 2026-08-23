@@ -1,5 +1,6 @@
 MoonBit Marine Biogeochemical Box Model Engine (moonbit-biogeochem)
 Copyright 2026 lqlnvj
 
-This product includes software developed for the MoonBit Open Source Competition 2026 (OSC 2026).
+This project is an independent MoonBit implementation of reusable marine
+biogeochemical simulation components.
 All code is written natively in MoonBit programming language.

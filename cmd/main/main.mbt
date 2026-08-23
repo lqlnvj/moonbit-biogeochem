@@ -6,7 +6,7 @@ fn main {
     "================================================================================",
   )
   println(
-    "  MoonBit Marine Biogeochemical Box Model Engine (`moonbit-biogeochem`) v0.1.0  ",
+    "  MoonBit Marine Biogeochemical Box Model Engine (`moonbit-biogeochem`) v0.1.1  ",
   )
   println(
     "================================================================================\n",
@@ -30,7 +30,12 @@ fn main {
       println("\n" + plot)
 
       let diag = @analysis.diagnose_npzd_trajectory(traj).unwrap()
-      println("  Mass Conservation Audit: " + diag.mass_conservation_status)
+      println("  Mass Balance Status: " + diag.mass_conservation_status)
+      if diag.mass_conservation_status == "OPEN_SYSTEM_EXPORT" {
+        println(
+          "  Note: Detritus sinking is modeled as an expected export from the box.",
+        )
+      }
       println(
         "  Initial Mass: " +
         diag.initial_total_mass.to_string() +

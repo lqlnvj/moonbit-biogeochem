@@ -113,3 +113,12 @@ test "npzd trajectory diagnostics" {
   let diag = diagnose_npzd_trajectory(traj).unwrap()
   inspect(diag.mass_conservation_status, content="CONSERVED")
 }
+
+///|
+test "npzd diagnostics labels sinking as open-system export" {
+  let model = @models.create_npzd_model(15.0, 0.5, 0.1, 0.2)
+  let env_fn = fn(t) { @types.EnvironmentForcing::seasonal_forcing(t, 45.0) }
+  let traj = @solver.solve_rk4(model, 30.0, 0.5, env_fn).unwrap()
+  let diag = diagnose_npzd_trajectory(traj).unwrap()
+  inspect(diag.mass_conservation_status, content="OPEN_SYSTEM_EXPORT")
+}

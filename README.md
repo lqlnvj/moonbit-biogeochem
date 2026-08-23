@@ -89,7 +89,7 @@ Source accounting is reproducible and excludes `_build` artifacts. Production an
 pwsh -NoProfile -File scripts/measure-source.ps1
 ```
 
-At this revision the command reports 5,319 production MoonBit lines and 799 test lines. The command should be used for later revisions instead of relying on a stale badge or manual estimate.
+At this revision the command reports 5,330 production MoonBit lines and 808 test lines. The command should be used for later revisions instead of relying on a stale badge or manual estimate.
 
 ## Development and testing
 
