@@ -5,6 +5,10 @@ import {
   "moonbitlang/core/math",
 }
 
+import {
+  "lqlnvj/moonbit-biogeochem/src/models",
+} for "test"
+
 options(
   "is-main": false,
 )
