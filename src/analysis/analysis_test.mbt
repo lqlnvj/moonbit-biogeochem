@@ -122,3 +122,22 @@ test "npzd diagnostics labels sinking as open-system export" {
   let diag = diagnose_npzd_trajectory(traj).unwrap()
   inspect(diag.mass_conservation_status, content="OPEN_SYSTEM_EXPORT")
 }
+
+///|
+test "carbon pump metrics handle reference and export edge cases" {
+  assert_eq(compute_martin_curve_attenuation(12.0, 100.0, 50.0, 0.8), 12.0)
+  assert_eq(compute_martin_curve_attenuation(12.0, 0.0, 1000.0, 0.8), 12.0)
+  let deep = compute_martin_curve_attenuation(12.0, 100.0, 1000.0, 0.8)
+  assert_true(deep > 0.0 && deep < 12.0)
+
+  let metrics = analyze_biological_carbon_pump(100.0, 10.0, 0.8)
+  assert_eq(metrics.surface_primary_production, 100.0)
+  assert_eq(metrics.export_flux_100m, 10.0)
+  assert_eq(metrics.export_ratio_pe, 0.1)
+  assert_true(metrics.deep_flux_1000m > 0.0)
+  assert_true(metrics.transfer_efficiency < 1.0)
+
+  let empty = analyze_biological_carbon_pump(0.0, 0.0, 0.8)
+  assert_eq(empty.export_ratio_pe, 0.0)
+  assert_eq(empty.transfer_efficiency, 0.0)
+}

@@ -6,7 +6,7 @@ fn main {
     "================================================================================",
   )
   println(
-    "  MoonBit Marine Biogeochemical Box Model Engine (`moonbit-biogeochem`) v0.1.1  ",
+    "  MoonBit Marine Biogeochemical Box Model Engine (`moonbit-biogeochem`) v0.1.2  ",
   )
   println(
     "================================================================================\n",

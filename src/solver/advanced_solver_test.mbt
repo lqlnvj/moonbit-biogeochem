@@ -39,3 +39,27 @@ test "trapezoidal predictor corrector run" {
   let traj = solve_trapezoidal(model, 2.0, 0.2, env_fn).unwrap()
   assert_true(traj.length() > 5)
 }
+
+///|
+test "adams bashforth two step solver handles partial final step" {
+  let model = create_simple_model()
+  let env_fn = fn(_t) { @types.EnvironmentForcing::default_surface() }
+  let traj = solve_adams_bashforth_2(model, 1.05, 0.2, env_fn).unwrap()
+  let timestamps = traj.get_timestamps()
+  let values = traj.get_time_series("N").unwrap()
+  assert_true(timestamps.length() > 5)
+  assert_true((timestamps[timestamps.length() - 1] - 1.05).abs() < 1.0e-9)
+  assert_true(values[values.length() - 1] >= 0.0)
+}
+
+///|
+test "adams bashforth three step solver bootstraps and stays nonnegative" {
+  let model = create_simple_model()
+  let env_fn = fn(_t) { @types.EnvironmentForcing::default_surface() }
+  let traj = solve_adams_bashforth_3(model, 0.95, 0.2, env_fn).unwrap()
+  let timestamps = traj.get_timestamps()
+  let values = traj.get_time_series("N").unwrap()
+  assert_true(timestamps.length() > 4)
+  assert_true((timestamps[timestamps.length() - 1] - 0.95).abs() < 1.0e-9)
+  assert_true(values[values.length() - 1] >= 0.0)
+}
